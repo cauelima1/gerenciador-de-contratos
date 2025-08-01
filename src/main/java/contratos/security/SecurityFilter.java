@@ -26,21 +26,62 @@ public class SecurityFilter extends OncePerRequestFilter {
     private UserRepository userRepository;
 
 
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//
+//        var token = this.recoverToken(request);
+//        if (token != null) {
+//            var login = tokenService.validateToken(token);
+//            var user = userRepository.findByLogin(login);
+//            if (user != null) {
+//                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//            } else {
+//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário não encontrado");
+//                return;
+//
+//            }
+//        }
+//        filterChain.doFilter(request, response);
+//    }
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoverToken(request);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+
+        // Ignorar rotas públicas
+        if (path.startsWith("/login") || path.startsWith("/cadastro") || path.startsWith("/error")
+                || path.startsWith("/images") || path.startsWith("/js") || path.startsWith("/css")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = recoverToken(request);
+
         if (token != null) {
-            var login = tokenService.validateToken(token);
-            var user = userRepository.findByLogin(login);
-            if (user != null) {
-                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            String login = tokenService.validateToken(token);
+
+            if (login != null) {
+                var user = userRepository.findByLogin(login);
+
+                if (user != null) {
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário não encontrado");
+                    return;
+                }
             } else {
-                throw new RuntimeException("Usuario não encontrado para o login");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
+                return;
             }
         }
+
         filterChain.doFilter(request, response);
     }
+
 
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");

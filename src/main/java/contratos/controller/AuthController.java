@@ -3,24 +3,30 @@ package contratos.controller;
 import contratos.model.Users;
 import contratos.model.dto.UserDTO;
 import contratos.repository.UserRepository;
+import contratos.security.TokenBlackList;
+import contratos.security.TokenService;
 import contratos.service.AuthService;
 import contratos.service.LoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 
 @Controller
 public class AuthController {
 
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private TokenBlackList tokenBlackList;
 
     @Autowired
     private AuthService authService;
@@ -39,7 +45,7 @@ public class AuthController {
     @GetMapping("/cadastro")
     public String showForm(Model model) {
         model.addAttribute("user", new Users());
-        return "/auth/cadastro"; // nome do template cadastro.html
+        return "/auth/cadastro";
     }
 
 
@@ -56,7 +62,6 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody Users user, HttpServletResponse response) throws UnsupportedEncodingException {
         var token = loginService.token(user);
-
         Cookie cookie = new Cookie("jwt",token);
         cookie.setHttpOnly(true); // Protege contra acesso via JavaScript
         cookie.setSecure(true); // Só envia via HTTPS
@@ -64,7 +69,8 @@ public class AuthController {
         cookie.setMaxAge(3600); // Tempo de vida do cookie em segundos (1 hora)
         response.addCookie(cookie); // Adiciona o cookie à resposta HTTP
         System.out.println(token);
-
         return "index";
     }
+
+
 }

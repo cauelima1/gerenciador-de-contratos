@@ -1,27 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script src="/js/login.js" ></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/login.js"></script>
+    <style>
+        /* Reset básico */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, #2c3e50, #3498db);
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        }
+
+        .login-container {
+          background-color: #fff;
+          padding: 40px 30px;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+          max-width: 400px;
+          width: 100%;
+          text-align: center;
+          position: relative;
+        }
+
+        #logodroneair {
+          width: 50px;
+          margin-bottom: 20px;
+        }
+
+        h3 {
+          margin-bottom: 24px;
+          font-size: 22px;
+          color: #2c3e50;
+        }
+
+        .input-group {
+          text-align: left;
+          margin-bottom: 20px;
+        }
+
+        .input-group label {
+          display: block;
+          margin-bottom: 6px;
+          font-weight: 600;
+          color: #34495e;
+        }
+
+        .input-group input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          font-size: 16px;
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus {
+          border-color: #3498db;
+          box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+          outline: none;
+        }
+
+        .login-button,
+        .cadastro-button {
+          background-color: #3498db;
+          color: white;
+          border: none;
+          padding: 14px 20px;
+          border-radius: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        .login-button:hover,
+        .cadastro-button:hover {
+          background-color: #2980b9;
+        }
+
+        .cadastro-form {
+          margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<h2>Autenticação</h2>
+<div class="login-container">
+    <img src="/images/logo-Droneair.png" alt="logo-Droneair" id="logodroneair" />
+    <h3>Faça login para acessar ao sistema:</h3>
 
-<!-- ✅ Removido form tradicional -->
-<label for="login"><b>Usuário:</b></label><br>
-<input type="text" id="login" name="login" placeholder="Login" required><br><br>
+    <div class="input-group">
+        <label for="login">Usuário:</label>
+        <input type="text" id="login" name="login" placeholder="Digite seu login" required>
+    </div>
 
-<label for="password"><b>Senha:</b></label><br>
-<input type="password" id="password" name="password" placeholder="Senha" required><br><br>
+    <div class="input-group">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+    </div>
 
-<button onclick="fazerLogin()">OK</button>
+    <button class="login-button" onclick="fazerLogin()">Entrar</button>
 
-<br><br>
-<form action="/cadastro" method="get">
-    <button type="submit">Ir para Cadastro</button>
-</form>
-
+    <form class="cadastro-form" action="/cadastro" method="get">
+        <button type="submit" class="cadastro-button">Ir para Cadastro</button>
+    </form>
+</div>
 </body>
 </html>

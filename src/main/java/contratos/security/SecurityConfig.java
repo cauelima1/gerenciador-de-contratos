@@ -30,16 +30,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         return http
                 .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()))        // necessário para o H2 Console
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))        // necessário para o H2 Console
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**", "/static/**", "/js/**", "/**","/css/**", "/webjars/**","favicon.ico").permitAll()
                         .requestMatchers(HttpMethod.GET, "/login", "/cadastro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login", "/cadastro").permitAll()
+                        .requestMatchers("/index").hasRole("user")
                         .anyRequest().authenticated()
                 )
+
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .logout( l-> l.logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JESSEIONID")
+                        .logoutSuccessUrl("/login")
+                        .permitAll())
                 //.formLogin(form -> form.loginPage("/login")) Nao funciona após o login, da erro de conexao com servidor (login.js)
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -19,7 +19,6 @@ public class AuthService {
     private UserRepository userRepository;
 
     public ResponseEntity createUser(UserDTO userDTO){
-
         String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.password());
         Users newUser = new Users(userDTO.login().toLowerCase(), encryptedPassword, "user");
         userRepository.save(newUser);
