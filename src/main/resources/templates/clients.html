@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/auth.js"></script>
+    <style>
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          margin: 20px 0;
+        }
+
+        thead {
+          background-color: #2D5C88;
+          color: white;
+        }
+
+        thead th {
+          padding: 12px;
+          text-align: left;
+          border-bottom: 2px solid #1c3d5d;
+        }
+
+        tbody tr {
+          border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+
+        tbody td {
+          padding: 10px;
+          color: #333;
+        }
+
+        tbody tr:hover {
+          background-color: #f1f1f1;
+          cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<h2>Clientes cadastrados</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Número de Contrato</th>
+        <th>Nome</th>
+        <th>CPF/CNPJ</th>
+        <th>Data</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Localização</th>
+        <th>Serviço</th>
+        <th>Tipo</th>
+        <th>Preço</th>
+        <th>Deslocamento</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.contract}" data-label="Contrato"></td>
+        <td th:text="${client.name}" data-label="Nome"></td>
+        <td th:text="${client.id}" data-label="CPF/CNPJ"></td>
+        <td th:text="${client.date}" data-label="Data"></td>
+        <td th:text="${client.foneNumber}" data-label="Telefone"></td>
+        <td th:text="${client.email}" data-label="Email"></td>
+        <td th:text="${client.location}" data-label="Localização"></td>
+        <td th:text="${client.serviceDetails}" data-label="Serviço"></td>
+        <td th:text="${client.serviceType}" data-label="Tipo"></td>
+        <td th:text="${client.servicePriceFormated}" data-label="Preço"></td>
+        <td th:text="${client.deslocationPriceFormated}" data-label="Deslocamento"></td>
+        <td th:text="${client.totalPriceFormated}" data-label="Total"></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<div>
+    <a href="/index" class="botao">Voltar</a>
+    <a href="/alterar" class="botao">Alterar ou Excluir</a>
+    <a href="/gerarPdfExistente" class="botao">Gerar Orçamento</a>
+</div>
+
+</body>
+</html>

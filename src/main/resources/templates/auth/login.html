@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="/js/login.js" ></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h2>Autenticação</h2>
+
+<!-- ✅ Removido form tradicional -->
+<label for="login"><b>Usuário:</b></label><br>
+<input type="text" id="login" name="login" placeholder="Login" required><br><br>
+
+<label for="password"><b>Senha:</b></label><br>
+<input type="password" id="password" name="password" placeholder="Senha" required><br><br>
+
+<button onclick="fazerLogin()">OK</button>
+
+<br><br>
+<form action="/cadastro" method="get">
+    <button type="submit">Ir para Cadastro</button>
+</form>
+
+</body>
+</html>

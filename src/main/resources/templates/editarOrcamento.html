@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Cliente</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/auth.js"></script>
+</head>
+<body>
+<h2>Editar dados do cliente</h2>
+<form th:action="@{/edit}" th:object="${client}" method="post">
+
+  <input type="hidden" th:field="*{contract}" />
+
+  <label>Nome:</label>
+  <input type="text" th:field="*{name}" /><br/>
+
+  <label>CPF / CNPJ:</label>
+  <input type="number" th:field="*{id}" /><br/>
+
+  <label>Email:</label>
+  <input type="email" th:field="*{email}" /><br/>
+
+  <label>Telefone:</label>
+  <input type="number" th:field="*{foneNumber}" /><br/>
+
+  <label>Endereço:</label>
+  <input type="text" th:field="*{location}" /><br/>
+
+  <label>Data:</label>
+  <input type="text" th:field="*{date}" /><br/>
+
+  <label>Detalhes do Serviço:</label>
+  <input type="text" th:field="*{serviceDetails}" /><br/>
+
+  <label for="tipo_servico">Tipo de Serviço:</label>
+  <select th:field="*{serviceType}" id="tipo_servico" required>
+  <option value="0">Aerofotogrametria</option>
+    <option value="1">Captação com Drone + Edição</option>
+    <option value="2">Captação com Drone</option>
+  </select>
+
+  <label>Preço do Serviço:</label>
+  <input type="number" th:field="*{servicePrice}" /><br/>
+
+  <label>Preço de custos:</label>
+  <input type="number" th:field="*{deslocationPrice}" /><br/>
+
+  <input type="Hidden" th:field="*{totalPrice}" /><br/>
+
+  <button type="submit" onclick="avisar">Salvar alterações</button>
+
+  <script>
+  function avisar(){
+    alert("Contrato atualizado com sucesso.");
+    }
+  </script>
+
+
+</form>
+</body>
+</html>

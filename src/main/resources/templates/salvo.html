@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação de Cadastro</title>
+    <style>
+        body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 40px;
+}
+
+.mensagem {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  text-align: left;
+  padding: 8px;
+  background-color: #f0f0f0;
+}
+
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.botao {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha256-L2JmGDnPmCPgibov8GGhBdg7BTyqO2cmDatW6kOPvFo=" crossorigin="anonymous"></script>
+    <script src="/js/script.js" defer></script>
+    <script src="/js/data.js" defer></script>
+    <script src="/js/auth.js"></script>
+</head>
+<body>
+
+
+
+<section id="content" class="mensagem">
+
+    <span id="infoCliente"
+          th:attr="data-nome=${client.name},data-contrato=${client.contract}"
+          style="display:none;"></span>
+
+
+    <header style="text-align:center; margin-bottom: 20px;">
+        <img src="/images/logo-Droneair.png" alt="logo-Droneair" width="80" id="logodroneair"/>
+        <p th:text="${mensagem}" class="info-msg" style="font-size: 1.2em; font-weight: 500;"></p>
+        <h2>Proposta de Orçamento</h2>
+    </header>
+
+    <article>
+        <h3>Informações Gerais</h3>
+        <table>
+            <tr><th>Nome:</th><td th:text="${client.name}"></td></tr>
+            <tr><th>Email:</th><td th:text="${client.email}"></td></tr>
+            <tr><th>Telefone:</th><td th:text="${client.foneNumber}"></td></tr>
+            <tr><th>Localização:</th><td th:text="${client.location}"></td></tr>
+            <tr><th>Data:</th><td th:text="${client.date}"></td></tr>
+        </table>
+
+        <h3>Detalhes do Serviço</h3>
+        <p><strong>Descrição:</strong>  <span th:text="${client.serviceDetails}" style="white-space: pre-line;"></span>
+        </p>
+
+        <p><strong>Tipo:</strong>
+            <span th:switch="${client.serviceType}">
+                <span th:case="0">Aerofotogrametria</span>
+                <span th:case="1">Captação + Edição</span>
+                <span th:case="2">Captação em material bruto</span>
+                <span th:case="*">Tipo desconhecido</span>
+            </span>
+        </p>
+
+        <h3><strong>Valor do serviço:</strong> <span th:text="${client.totalPriceFormated}"></span></h3>
+    </article>
+    </br>
+    <section>
+        <h3>Observações</h3>
+
+            <strong>A)</strong> Sujeito à disponibilidade climática. Em caso de chuvas ou ventos fortes, o serviço será reagendado ou o valor ressarcido, caso não haja disponibilidade do cliente.</br>
+            <strong>B)</strong> Material entregue em até 7 dias úteis.</br>
+            <strong>C)</strong> Entrega via Google Drive.</br>
+            <strong>D)</strong> Adiantamento de 30% com 4 dias de antecedência da filmagem.</br>
+
+    </section>
+
+    <footer style="margin-top: 30px;">
+        <address>
+            Rua Icatú, 390 – Bairro Parque Industrial – São José dos Campos – SP<br>
+            Tel: (12) 99144-3478<br>
+            Email: contato@droneairsjc.com.br<br>
+            CNPJ: 58.603.426/0001-10
+        </address>
+        <p>Emissão: <span id="data-formatada"></span> – Orçamento <strong>nº<span id="ano"></span>/0<span th:text="${client.contract}"></span></strong></p>
+
+        <script>
+            const anoAtual = new Date().getFullYear();
+            document.getElementById("ano").textContent = anoAtual;
+        </script>
+
+    </footer>
+
+
+
+
+</section>
+
+<div style="text-align:center; margin-top: 40px;">
+    <a href="/index" class="botao">Voltar</a>
+    <a href="#" class="botao" id="generate-pdf">Gerar PDF</a>
+</div>
+
+</body>
+</html>

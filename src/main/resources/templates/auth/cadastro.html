@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h2>Cadastro de Novo Usuário</h2>
+
+<!-- Mensagens -->
+<div th:if="${error}" style="color:red;">
+  <p th:text="${error}"></p>
+</div>
+<div th:if="${success}" style="color:green;">
+  <p th:text="${success}"></p>
+</div>
+
+<form th:action="@{/cadastro}" th:object="${user}" method="post">
+  <label for="login"><b>Usuário:</b></label><br>
+  <input type="text" id="login" th:field="*{login}" placeholder="Novo Login" required><br><br>
+
+  <label for="password"><b>Senha:</b></label><br>
+  <input type="password" id="password" th:field="*{password}" placeholder="Senha" required><br><br>
+
+  <label for="password2"><b>Confirme a Senha:</b></label><br>
+  <input type="password" id="password2" placeholder="Confirme a Senha" required><br><br>
+
+  <button type="submit">Cadastrar</button>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", event => {
+          const password = document.getElementById("password").value;
+          const password2 = document.getElementById("password2").value;
+
+          if (password !== password2) {
+              event.preventDefault();
+              alert("As senhas não coincidem.");
+          }
+      });
+  });
+</script>
+
+<div th:if="${success}" style="color:green;">
+  <p th:text="${success}"></p>
+</div>
+
+</body>
+</html>
