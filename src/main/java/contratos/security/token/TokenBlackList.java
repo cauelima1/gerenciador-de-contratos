@@ -1,4 +1,4 @@
-package contratos.security;
+package contratos.security.token;
 
 import org.springframework.stereotype.Component;
 
@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Component
 public class TokenBlackList {
+
     private final Set<String> blacklist = new HashSet<>();
 
     public void add (String token) {

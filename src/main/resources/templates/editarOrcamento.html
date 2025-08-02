@@ -4,7 +4,69 @@
   <meta charset="UTF-8">
   <title>Editar Cliente</title>
 
-  <link rel="stylesheet" href="/css/style.css">
+<style>/* Estilo geral da página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Título */
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Formulário */
+form {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Rótulos */
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Botão */
+button[type="submit"] {
+  margin-top: 25px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+</style>
   <script src="/js/auth.js"></script>
 </head>
 <body>
@@ -29,7 +91,8 @@
   <input type="text" th:field="*{location}" /><br/>
 
   <label>Data:</label>
-  <input type="text" th:field="*{date}" /><br/>
+  <input type="date" th:field="*{date}" /><br/>
+
 
   <label>Detalhes do Serviço:</label>
   <input type="text" th:field="*{serviceDetails}" /><br/>
@@ -46,6 +109,13 @@
 
   <label>Preço de custos:</label>
   <input type="number" th:field="*{deslocationPrice}" /><br/>
+
+  <label for="service_status">Status do Serviço:</label>
+  <select th:field="*{serviceStatus}" id="service_status" required>
+    <option value="1">Agendar</option>
+    <option value="2">Não aprovado</option>
+    <option value="3">Finalizado</option>
+  </select>
 
   <input type="Hidden" th:field="*{totalPrice}" /><br/>
 

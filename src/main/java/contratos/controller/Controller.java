@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.exceptions.TemplateAssertionException;
 
 import java.util.List;
 
@@ -29,8 +30,6 @@ public class Controller {
 
     @Autowired
     private LoginService loginService;
-
-
 
     @GetMapping("/index")
     public String homeIndex() {
@@ -62,15 +61,16 @@ public class Controller {
 
     @PostMapping("/gerar-pdf-existente")
     public String gerarPdfExistente(@RequestParam Long numeroContrato, Model model){
-        Client client = clientRepository.findByContract(numeroContrato);
-        if (client == null){
-            throw new RuntimeException("Número de contrato não identificado. Verifique por favor!");
-        }
-        model.addAttribute("Mensagem","Cliente Salvo!");
-        model.addAttribute("client", client);
-        return "salvo";
-    }
 
+        if (clientRepository.findByContract(numeroContrato) == null){
+            throw new RuntimeException("Número de contrato não identificado. Verifique por favor!");
+        } else {
+            Client client = clientRepository.findByContract(numeroContrato);
+            model.addAttribute("Mensagem", "Cliente Salvo!");
+            model.addAttribute("client", client);
+            return "salvo";
+        }
+    }
 
     @DeleteMapping("/deletar/{contract}")
     public String deletarContrato(@PathVariable Long contract){
@@ -103,9 +103,11 @@ public class Controller {
         try {
             Client client = clientRepository.findByContract(contract);
             model.addAttribute("client", client);
-        } catch (RuntimeException e) {
+        }catch (Exception e) {
+            model.addAttribute("erroMensagem", "Erro interno: " + e.getMessage());
+            return "EditarOrcamento";
         }
-        return "EditarOrcamento";
+                return "EditarOrcamento";
     }
 
     @PostMapping("/edit")
@@ -113,8 +115,6 @@ public class Controller {
         clientService.gravarDadosEditados(client);
         return "redirect:/clients";
     }
-
-
 
     @GetMapping("/clients")
     public String showClients (Model model){

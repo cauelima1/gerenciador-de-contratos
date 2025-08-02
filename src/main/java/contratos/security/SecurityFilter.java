@@ -1,6 +1,7 @@
 package contratos.security;
 
 import contratos.repository.UserRepository;
+import contratos.security.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -24,26 +25,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserRepository userRepository;
-
-
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//
-//        var token = this.recoverToken(request);
-//        if (token != null) {
-//            var login = tokenService.validateToken(token);
-//            var user = userRepository.findByLogin(login);
-//            if (user != null) {
-//                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            } else {
-//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário não encontrado");
-//                return;
-//
-//            }
-//        }
-//        filterChain.doFilter(request, response);
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

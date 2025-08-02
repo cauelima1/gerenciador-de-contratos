@@ -63,6 +63,7 @@
         <th>Preço</th>
         <th>Deslocamento</th>
         <th>Total</th>
+        <th>Status do Orçamento</th>
     </tr>
     </thead>
     <tbody>
@@ -79,7 +80,10 @@
         <td th:text="${client.servicePriceFormated}" data-label="Preço"></td>
         <td th:text="${client.deslocationPriceFormated}" data-label="Deslocamento"></td>
         <td th:text="${client.totalPriceFormated}" data-label="Total"></td>
+        <td th:text="${client.serviceStatus}" data-label="Status do orçamento"></td>
     </tr>
+
+
     </tbody>
 </table>
 <br>
@@ -88,6 +92,14 @@
     <a href="/alterar" class="botao">Alterar ou Excluir</a>
     <a href="/gerarPdfExistente" class="botao">Gerar Orçamento</a>
 </div>
+<br>
+<br>
+<div>
 
+</div>
+<a href="/mostrarEmAberto" class="botao"style="background-color: #28a745;">Filtrar orçamentos em aberto</a> <!-- Concluido -->
+<a href="/mostrarAgendados" class="botao"style="background-color: #008080;">Filtrar orçamentos agendados</a>
+<a href="/mostrarNaoAprovados" class="botao" style="background-color: #B22222;">Filtrar orçamentos não aprovados</a>
+<a href="/mostrarFinalizados" class="botao" style="background-color: #228B22;">Filtrar orçamentos finalizados</a>
 </body>
 </html>

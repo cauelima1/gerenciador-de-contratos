@@ -16,85 +16,52 @@
 
         <form action="http://localhost:8080/NovoOrcamento" method="post" class="form-group">
 
-     <label><b>*Nome do cliente:</b></label>
-     <input type="text" name="name" placeholder="Nome" required>
 
-      <label><b>Número de CPF ou CNPJ: (Digitar somente números)</b></label>
-      <input type="number" name="id" placeholder="CPF ou CNPJ">
-
-      <label><b>Data Prevista para o serviço:</b></label>
-      <input type="date" name="date" placeholder="Data Prevista">
-
-      <label><b>*Número de telefone:</b></label>
-      <input type="number" name="foneNumber" placeholder="Telefone" required>
-
-      <label><b>Email do cliente:</b></label>
-      <input type="email" name="email" placeholder="Email">
-
-      <label><b>*Local de sobrevôo:</b></label>
-      <input type="text" name="location" placeholder="Localização" required>
-
-      <label for="tipo_servico"><b>*Tipo de Serviço:</b></label>
-      <select id="tipo_servico" name="serviceType" required>
-          <option value="0">Aerofotogrametria</option>
-          <option value="1">Captação com Drone + Edição</option>
-          <option value="2">Captação com Drone</option>
-      </select>
-
-      <label for="servico"><b>*Caracterização do serviço:</b></label>
-      <textarea id="servico" name="serviceDetails" placeholder="Digite todos os detalhes passados pelo cliente..."></textarea>
-
-      <h2>*Precificação</h2>
-      <input type="number" name="servicePrice" placeholder="Preço sugerido" required>
-      <input type="number" name="deslocationPrice" placeholder="Custos com deslocamento">
-
-      <button type="submit" >Salvar</button>
-      <a href="/index" class="botao">Voltar</a>
-  </form>
-
-      <form id="orcamentoForm" class="form-group">
-          <!-- Seus inputs permanecem como estão -->
-      </form>
-
-      <script>
-          document.getElementById("orcamentoForm").addEventListener("submit", async function (e) {
-              e.preventDefault();
-
-              const token = localStorage.getItem("token"); // pega o token salvo no login
-              if (!token) {
-                  alert("Você precisa estar logado para enviar o orçamento.");
-                  return;
-              }
-
-              const formData = new FormData(this);
-              const data = Object.fromEntries(formData.entries());
-
-              try {
-                  const response = await fetch("http://localhost:8080/NovoOrcamento", {
-                      method: "POST",
-                      headers: {
-                          "Content-Type": "application/json",
-                          "Authorization": `Bearer ${token}`
-                      },
-                      body: JSON.stringify(data)
-                  });
-
-                  if (response.ok) {
-                      alert("Orçamento salvo com sucesso!");
-                      window.location.href = "/index"; // ou outra página
-                  } else {
-                      alert("Erro ao salvar. Verifique os dados ou autenticação.");
-                  }
-              } catch (error) {
-                  console.error("Erro na requisição:", error);
-                  alert("Erro inesperado.");
-              }
-          });
-      </script>
+            <label for="status_servico"><b>*Status do Serviço:</b></label>
+            <select id="status_servico" name="serviceStatus" >
+                <option value="0" selected>Orçamento em Aberto</option>
+                <option value="1">Agendado</option>
+                <option value="2">Não Aprovado</option>
+                <option value="3">Finalizado</option>
+            </select>
 
 
+            <label><b>*Nome do cliente:</b></label>
+             <input type="text" name="name" placeholder="Nome" required>
 
-  </div>
+              <label><b>Número de CPF ou CNPJ: (Digitar somente números)</b></label>
+              <input type="number" name="id" placeholder="CPF ou CNPJ">
+
+              <label><b>Data Prevista para o serviço:</b></label>
+              <input type="date" name="date" placeholder="Data Prevista">
+
+              <label><b>*Número de telefone:</b></label>
+              <input type="number" name="foneNumber" placeholder="Telefone" required>
+
+              <label><b>Email do cliente:</b></label>
+              <input type="email" name="email" placeholder="Email">
+
+              <label><b>*Local de sobrevôo:</b></label>
+              <input type="text" name="location" placeholder="Localização" required>
+
+              <label for="tipo_servico"><b>*Tipo de Serviço:</b></label>
+              <select id="tipo_servico" name="serviceType" required>
+                  <option value="0">Aerofotogrametria</option>
+                  <option value="1">Captação com Drone + Edição</option>
+                  <option value="2">Captação com Drone</option>
+              </select>
+
+              <label for="servico"><b>*Caracterização do serviço:</b></label>
+              <textarea id="servico" name="serviceDetails" placeholder="Digite todos os detalhes passados pelo cliente..."></textarea>
+
+              <h2>*Precificação</h2>
+              <input type="number" name="servicePrice" placeholder="Preço sugerido" required>
+              <input type="number" name="deslocationPrice" placeholder="Custos com deslocamento">
+
+              <button type="submit" >Salvar</button>
+              <a href="/index" class="botao">Voltar</a>
+         </form>
+      </div>
 
 
 </body>

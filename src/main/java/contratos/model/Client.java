@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long contract;
     private String name;
     private Long id; //cpf ou cnjp
@@ -28,6 +28,21 @@ public class Client {
     private String deslocationPriceFormated;
     private Long totalPrice;
     private String totalPriceFormated;
+
+    public String getServiceStatus() {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(String serviceStatus) {
+        this.serviceStatus = serviceStatus;
+    }
+
+    public Client(String serviceStatus) {
+        this.serviceStatus = serviceStatus;
+    }
+
+    private String serviceStatus;
+
 
     public String getTotalPriceFormated() {
         return totalPriceFormated;
@@ -170,5 +185,28 @@ public class Client {
         this.serviceType = serviceType;
         this.servicePrice = servicePrice;
         this.deslocationPrice = deslocationPrice;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "contract=" + contract +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                ", date='" + date + '\'' +
+                ", foneNumber=" + foneNumber +
+                ", email='" + email + '\'' +
+                ", location='" + location + '\'' +
+                ", serviceDetails='" + serviceDetails + '\'' +
+                ", serviceType='" + serviceType + '\'' +
+                ", servicePrice=" + servicePrice +
+                ", servicePriceFormated='" + servicePriceFormated + '\'' +
+                ", deslocationPrice=" + deslocationPrice +
+                ", deslocationPriceFormated='" + deslocationPriceFormated + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", totalPriceFormated='" + totalPriceFormated + '\'' +
+                ", serviceStatus='" + serviceStatus + '\'' +
+                '}';
     }
 }

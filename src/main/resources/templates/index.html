@@ -6,9 +6,82 @@
         <title>Droneair System</title>
         <link rel="stylesheet" href="/css/style.css">
         <script src="/js/auth.js" defer></script>
+
+        <style>
+            .container-relogio {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-center; /* Alinha à direita */
+              margin: 20px;
+            }
+
+            .hora-relogio {
+              font-size: 28px;
+              color: #FFFFFF;
+            }
+            .painel-relogio {
+              width: 150px;
+              margin: 5px auto;
+              padding: 5px;
+              background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+              border-radius: 12px;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+              color: #fff;
+              font-family: 'Segoe UI', sans-serif;
+              text-align: left;
+            }
+
+            .container-relogio {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+
+            .hora-relogio {
+              font-size: 1.4rem;
+              font-weight: bold;
+            }
+
+        </style>
+
+
     </head>
 
     <body>
+    <div class="painel-relogio">
+    <div class="container-relogio">
+        <div class="hora-relogio" id="data"></div>
+        <div class="hora-relogio" id="relogio"></div>
+    </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+           const relogio = document.getElementById("relogio");
+           const data = document.getElementById("data");
+
+          function atualizar() {
+          const hoje = new Date();
+          const dia = hoje.getDate();
+          const mes = hoje.getMonth() +1;
+          const ano = hoje.getFullYear();
+           data.textContent = `${dia}/${mes}/${ano}`;
+
+            const agora = new Date();
+            const horas = agora.getHours().toString().padStart(2, '0');
+            const minutos = agora.getMinutes().toString().padStart(2, '0');
+            const segundos = agora.getSeconds().toString().padStart(2, '0');
+
+            relogio.textContent = `${horas}:${minutos}:${segundos}`;
+          }
+
+          setInterval(atualizar, 1000);
+          atualizar();
+        });
+    </script>
+
+
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <div style="text-align: center;">
         <img src="/images/logo-Droneair.png" alt="logo-Droneair" width="120" id="logodroneair"/>
@@ -17,12 +90,13 @@
     <div class="botao-container">
 
         <div class="top-section">
-            <h1>Gerenciador de Orçamentos Droneair</h1>
+            <h1>AirContractor</h1>
 
             <div class="botao-container">
                 <a href="/NovoOrcamento" class="botao">Novo Orçamento</a>
-                <a href="/clients" class="botao">Consultar Orçamentos e Imprimir</a>
+                <a href="/clients" class="botao">Consultar Contratos</a>
                 <a href="/alterar" class="botao">Alterar ou Deletar um Orçamento</a>
+                <a href="/logout" class="botao">Logout</a>
             </div>
         </div>
     </div>

@@ -14,7 +14,6 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
-
     public void gravarDadosEditados(Client client) {
         Client originClient = repository.findByContract((long) client.getContract());
         originClient.setName(client.getName());
@@ -27,6 +26,7 @@ public class ClientService {
         originClient.setServiceType(client.getServiceType());
         originClient.setServicePrice(client.getServicePrice());
         originClient.setDeslocationPrice(client.getDeslocationPrice());
+        originClient.setServiceStatus(client.getServiceStatus());
         formatarValores(originClient);
         repository.save(originClient);
     }
@@ -38,14 +38,6 @@ public class ClientService {
         client.setTotalPrice(client.getDeslocationPrice()+client.getServicePrice());
         client.setTotalPriceFormated(df.format(client.getTotalPrice()));
         repository.save(client);
-
     }
-
-
-
-
-
-
-
 
 }

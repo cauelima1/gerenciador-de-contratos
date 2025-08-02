@@ -27,7 +27,8 @@ async function fazerLogin() {
     }
 
   } catch (error) {
-    alert("Erro de conexão com o servidor.");
+    alert("Verifique as credenciais!");
     console.error(error);
   }
 }
+

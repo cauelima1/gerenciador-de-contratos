@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lant="pt-br">
+<html lant="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Alterar</title>
+<style>/* Estilo geral da página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
 
-    <link rel="stylesheet" href="/css/style.css">
+/* Rótulo */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
+
+/* Campo de entrada */
+input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+/* Botões */
+a.botao {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+a.botao:hover {
+  background-color: #0056b3;
+}
+</style>
+
     <script src="/js/auth.js"></script>
 </head>
 <body>
@@ -16,7 +60,10 @@
 
 <a class="botao" onclick="irParaEdicao()">Editar Orçamento</a>
 
+
 <a class="botao" onclick="confirmarDelecao()">Deletar Orçamento</a>
+
+
 
 <script>
     async function irParaEdicao() {
