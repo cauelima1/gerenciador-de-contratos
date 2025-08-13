@@ -32,7 +32,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // Ignorar rotas públicas
         if (path.startsWith("/login") || path.startsWith("/cadastro") || path.startsWith("/error")
                 || path.startsWith("/images") || path.startsWith("/js") || path.startsWith("/css")) {
             filterChain.doFilter(request, response);
@@ -59,7 +58,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 return;
             }
         }
-
         filterChain.doFilter(request, response);
     }
 

@@ -102,12 +102,16 @@ public class Controller {
     public String mostrarFormularioEdicao(@PathVariable Long contract, Model model) {
         try {
             Client client = clientRepository.findByContract(contract);
+            if (client==null){
+                model.addAttribute("erroMensagem", "Contrato não encontrado: " + contract);
+                return "alterarEdeletar";
+            }
             model.addAttribute("client", client);
         }catch (Exception e) {
             model.addAttribute("erroMensagem", "Erro interno: " + e.getMessage());
-            return "EditarOrcamento";
+            return "editarOrcamento";
         }
-                return "EditarOrcamento";
+                return "editarOrcamento";
     }
 
     @PostMapping("/edit")

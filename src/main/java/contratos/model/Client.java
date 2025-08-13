@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long contract;
     private String name;
     private Long id; //cpf ou cnjp

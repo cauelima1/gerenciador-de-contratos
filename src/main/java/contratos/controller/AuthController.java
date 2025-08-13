@@ -40,24 +40,24 @@ public class AuthController {
 
     @GetMapping("/logout")
     public String logout(){
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/login")
     public String paginaLogin(){
 
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/")
     public String paginaLogin2(){
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/cadastro")
     public String showForm(Model model) {
         model.addAttribute("user", new Users());
-        return "/auth/cadastro";
+        return "auth/cadastro";
     }
 
 
@@ -68,7 +68,7 @@ public class AuthController {
             return "cadastro";
         }
         authService.createUser(userDTO);
-        return "/auth/login";
+        return "auth/login";
     }
 
     @PostMapping("/login")
