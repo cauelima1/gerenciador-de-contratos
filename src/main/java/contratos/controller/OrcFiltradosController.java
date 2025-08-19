@@ -4,11 +4,16 @@ package contratos.controller;
 import contratos.model.Client;
 import contratos.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Contract;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class OrcFiltradosController {
@@ -67,5 +72,16 @@ public class OrcFiltradosController {
         return "orcamentosFinalizados";
     }
 
+    @GetMapping("/deleteById/{contract}")
+    public ResponseEntity<?> getNameClientToDelete (@PathVariable Long contract){
+        Client client = clientRepository.findByContract(contract);
+        if (client == null){
+            return ResponseEntity.notFound().build();
+        }
+        Map<String, String> response = new HashMap<>();
+        response.put(String.valueOf(client.getContract()), client.getName());
+
+        return ResponseEntity.ok(response);
+    }
 
 }

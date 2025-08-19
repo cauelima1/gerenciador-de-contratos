@@ -18,7 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
+
+
 
 @Controller
 public class AuthController {
@@ -45,7 +46,6 @@ public class AuthController {
 
     @GetMapping("/login")
     public String paginaLogin(){
-
         return "auth/login";
     }
 
@@ -63,20 +63,14 @@ public class AuthController {
 
     @PostMapping("/cadastro")
     public String cadastroUser (@ModelAttribute("user") @Validated UserDTO userDTO, Model model){
-        if (userRepository.existsByLogin(userDTO.login().trim().toLowerCase())) {
-            model.addAttribute("error", "Nome de usuário já cadastrado!");
-            return "cadastro";
-        }
-        authService.createUser(userDTO);
-        return "auth/login";
+        return authService.createUser(model, userDTO);
     }
 
     @PostMapping("/login")
     public String login(@RequestBody Users user, HttpServletResponse response) throws UnsupportedEncodingException {
-        var token = loginService.token(user, response);
-        System.out.println(token);
+        loginService.token(user, response);
         return "index";
-    }
+        }
 
 
 }

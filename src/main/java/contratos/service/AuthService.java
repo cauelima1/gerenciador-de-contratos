@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 @Service
 public class AuthService {
@@ -18,12 +19,17 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity createUser(UserDTO userDTO){
-        String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.password());
-        Users newUser = new Users(userDTO.login().toLowerCase(), encryptedPassword, "user");
-        userRepository.save(newUser);
+    public String createUser(Model model, UserDTO userDTO){
+        if (userRepository.existsByLogin(userDTO.login().trim().toLowerCase())) {
+            model.addAttribute("error", "Nome de usuário já cadastrado!");
+            return "auth/cadastro";
+        } else {
+            String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.password());
+            Users newUser = new Users(userDTO.login().toLowerCase(), encryptedPassword, "user");
+            userRepository.save(newUser);
+            return "auth/login";
+        }
 
-        return ResponseEntity.ok().build();
     }
 
 

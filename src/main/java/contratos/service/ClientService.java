@@ -34,6 +34,9 @@ public class ClientService {
     public void formatarValores(Client client) {
         DecimalFormat df = new DecimalFormat("R$ #,##0.00");
         client.setServicePriceFormated(df.format(client.getServicePrice()));
+        if (client.getDeslocationPrice() == null){
+            client.setDeslocationPrice(0L);
+        }
         client.setDeslocationPriceFormated(df.format(client.getDeslocationPrice()));
         client.setTotalPrice(client.getDeslocationPrice()+client.getServicePrice());
         client.setTotalPriceFormated(df.format(client.getTotalPrice()));

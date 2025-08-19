@@ -10,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.exceptions.TemplateAssertionException;
 
 import java.util.List;
 
 @org.springframework.stereotype.Controller
-public class Controller {
+public class MainController {
 
     @Autowired
     private ClientService clientService;
@@ -38,14 +37,13 @@ public class Controller {
 
     @PostMapping("/NovoOrcamento")
     public String registerClient(@ModelAttribute Client client, BindingResult result, Model model){
-        if (result.hasErrors()) {
-            throw new IllegalArgumentException("Digite corretamente");
-        } else{
-             clientService.formatarValores(client);
-
-            model.addAttribute("Mensagem","Cliente Salvo!");
+        try {
+            clientService.formatarValores(client);
+            model.addAttribute("Mensagem", "Cliente Salvo!");
             model.addAttribute("client", client);
             return "salvo";
+        } catch (IllegalArgumentException e) {
+            throw  new IllegalArgumentException("Digite os dados conrretamente!");
         }
     }
 

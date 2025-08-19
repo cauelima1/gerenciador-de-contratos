@@ -16,7 +16,7 @@ public class Users implements UserDetails {
 
 
     @Id
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String login;
     private String password;
     private String hole;

@@ -24,7 +24,6 @@ public class LoginService {
     private TokenService tokenService;
 
     public String token (Users user, HttpServletResponse response){
-
         UserDetails newUser = userRepository.findByLogin(user.getLogin());
         if (newUser != null){
             try {
