@@ -1,0 +1,140 @@
+/* GERAL */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.mensagem {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* CABEÇALHO */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header img {
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.4em;
+  color: #007bff;
+  margin-top: 5px;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+/* TABELA DE INFORMAÇÕES DO CLIENTE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+table th,
+table td {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+  vertical-align: top;
+}
+
+table th {
+  background-color: #f0f4f8;
+  color: #333;
+  font-weight: 600;
+  width: 30%;
+}
+
+table td {
+  background-color: #fafafa;
+  color: #222;
+}
+
+/* PARÁGRAFOS E SPANS */
+p {
+  margin: 10px 0;
+}
+
+span {
+  color: #333;
+}
+
+/* OBSERVAÇÕES */
+.observacoes {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+/* RODAPÉ */
+footer {
+  margin-top: 40px;
+  font-size: 0.85em;
+  color: #555;
+}
+
+address {
+  font-style: normal;
+  line-height: 1.6;
+}
+
+/* BOTÕES */
+.botao {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.9em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.botao:hover {
+  background-color: #0056b3;
+}
+
+/* PDF OTIMIZAÇÃO */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 0.85em;
+  }
+
+  .mensagem {
+    border: none;
+    padding: 10px;
+  }
+
+  .botao,
+  #generate-pdf {
+    display: none;
+  }
+
+  header img {
+    width: 40px;
+  }
+}

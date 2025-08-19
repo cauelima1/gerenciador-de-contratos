@@ -3,64 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Confirmação de Cadastro</title>
-    <style>
-        body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
-  padding: 40px;
-}
 
-.mensagem {
-  background-color: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
-  max-width: 800px;
-  margin: auto;
-}
-
-h2 {
-  text-align: center;
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-th {
-  text-align: left;
-  padding: 8px;
-  background-color: #f0f0f0;
-}
-
-td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-.botao {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-</style>
+    <link rel="stylesheet" href="/css/pdfStyle.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha256-L2JmGDnPmCPgibov8GGhBdg7BTyqO2cmDatW6kOPvFo=" crossorigin="anonymous"></script>
     <script src="/js/script.js" defer></script>
     <script src="/js/data.js" defer></script>
     <script src="/js/auth.js"></script>
 </head>
 <body>
-
-
 
 <section id="content" class="mensagem">
 
@@ -69,14 +19,14 @@ td {
           style="display:none;"></span>
 
 
-    <header style="text-align:center; margin-bottom: 20px;">
-        <img src="/images/logo-Droneair.png" alt="logo-Droneair" width="80" id="logodroneair"/>
-        <p th:text="${mensagem}" class="info-msg" style="font-size: 1.2em; font-weight: 500;"></p>
+    <header style="text-align:center; margin-bottom: 10px;">
+        <img src="/images/logo-Droneair.png" alt="logo-Droneair" width="50" id="logodroneair"/>
+        <p th:text="${mensagem}" class="info-msg" style="font-size: 1.0em; font-weight: 400;"></p>
         <h2>Proposta de Orçamento</h2>
     </header>
 
     <article>
-        <h3>Informações Gerais</h3>
+        <h3>Informações do cliente:</h3>
         <table>
             <tr><th>Nome:</th><td th:text="${client.name}"></td></tr>
             <tr><th>Email:</th><td th:text="${client.email}"></td></tr>
@@ -101,7 +51,7 @@ td {
         <h3><strong>Valor do serviço:</strong> <span th:text="${client.totalPriceFormated}"></span></h3>
     </article>
     </br>
-    <section>
+    <section class="observacoes">
         <h3>Observações</h3>
 
             <strong>A)</strong> Sujeito à disponibilidade climática. Em caso de chuvas ou ventos fortes, o serviço será reagendado ou o valor ressarcido, caso não haja disponibilidade do cliente.</br>
