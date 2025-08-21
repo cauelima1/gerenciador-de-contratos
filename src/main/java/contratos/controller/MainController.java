@@ -19,8 +19,6 @@ public class MainController {
     @Autowired
     private ClientService clientService;
 
-
-
     @Autowired
     private ClientRepository clientRepository;
 
@@ -81,6 +79,7 @@ public class MainController {
         return "gerarPDF";
     }
 
+
     @GetMapping("/clients/{contract}")
     public ResponseEntity<Client> getClient (@PathVariable Long contract){ //para validar se existe
         Client client = clientRepository.findByContract(contract);
@@ -119,8 +118,8 @@ public class MainController {
     }
 
     @GetMapping("/clients")
-    public String showClients (Model model){
-        List<Client> clientList = clientRepository.findAll();
+    public String showContracts(Model model){
+        List<Client> clientList= clientService.showAllContracts();
         model.addAttribute("clients", clientList);
         System.out.println(clientList);
         return "clients";

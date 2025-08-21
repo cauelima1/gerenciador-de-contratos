@@ -2,20 +2,22 @@ package contratos.service;
 
 import contratos.model.Client;
 import contratos.repository.ClientRepository;
-import contratos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
 
     @Autowired
-    private ClientRepository repository;
+    private ClientRepository clientRepository;
 
     public void gravarDadosEditados(Client client) {
-        Client originClient = repository.findByContract((long) client.getContract());
+        Client originClient = clientRepository.findByContract((long) client.getContract());
         originClient.setName(client.getName());
         originClient.setId(client.getId());
         originClient.setEmail(client.getEmail());
@@ -28,7 +30,7 @@ public class ClientService {
         originClient.setDeslocationPrice(client.getDeslocationPrice());
         originClient.setServiceStatus(client.getServiceStatus());
         formatarValores(originClient);
-        repository.save(originClient);
+        clientRepository.save(originClient);
     }
 
     public void formatarValores(Client client) {
@@ -40,7 +42,22 @@ public class ClientService {
         client.setDeslocationPriceFormated(df.format(client.getDeslocationPrice()));
         client.setTotalPrice(client.getDeslocationPrice()+client.getServicePrice());
         client.setTotalPriceFormated(df.format(client.getTotalPrice()));
-        repository.save(client);
+        clientRepository.save(client);
     }
 
+    public List<Client> showAllContracts () {
+        Map<String, String> statusMap = Map.of(
+                "0", "Aberto",
+                "1", "Agendado",
+                "2", "Finalizado",
+                "3", "Não Aprovado"
+        );
+        List<Client> clientsList = clientRepository.findAll().stream().map(
+                c -> {
+                    String status = statusMap.getOrDefault(c.getServiceStatus(), "Status Desconhecido");
+                    c.setServiceStatus(status);
+                    return c;
+                }).toList();
+    return clientsList;
+    }
 }

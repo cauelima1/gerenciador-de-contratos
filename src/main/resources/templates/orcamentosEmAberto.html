@@ -54,10 +54,10 @@
         <th>Status</th>
     </tr>
     <tr th:each="cliente : ${clientes}">
-        <td th:text="${cliente.name}">Nome</td>
-        <td th:text="${cliente.foneNumber}">Contato</td>
-        <td th:text="${cliente.totalPriceFormated}">Valor da cotação</td>
-        <td th:text="${cliente.serviceStatus}">Status</td>
+        <td style="text-align:center;" th:text="${cliente.name}">Nome</td>
+        <td style="text-align:center;" th:text="${cliente.foneNumber}">Contato</td>
+        <td style="text-align:center;" th:text="${cliente.totalPriceFormated}">Valor da cotação</td>
+        <td style="text-align:center;" th:text="${cliente.serviceStatus}">Status</td>
     </tr>
 
     <div style="margin-top: 20px;">
