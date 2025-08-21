@@ -75,7 +75,7 @@
         <td th:text="${client.foneNumber}" data-label="Telefone"></td>
         <td th:text="${client.email}" data-label="Email"></td>
         <td th:text="${client.location}" data-label="Localização"></td>
-        <td th:text="${client.serviceDetails}" data-label="Serviço"></td>
+        <td th:text="${#strings.length(client.serviceDetails) > 50 ? #strings.substring(client.serviceDetails, 0, 50) + '...' : client.serviceDetails}" data-label="Serviço"></td>
         <td th:text="${client.serviceType}" data-label="Tipo"></td>
         <td th:text="${client.servicePriceFormated}" data-label="Preço"></td>
         <td th:text="${client.deslocationPriceFormated}" data-label="Deslocamento"></td>
