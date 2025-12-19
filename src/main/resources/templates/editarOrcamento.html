@@ -48,9 +48,10 @@
 
   <input type="number" th:field="*{deslocationPrice}" /><br/>
 
-  <label for="service_status">Status do Serviço:</label>
-  <select th:field="*{serviceStatus}" id="service_status" required>
-    <option value="1">Agendar</option>
+  <label for="status_servico"><b>*Status do Serviço:</b></label>
+  <select id="status_servico" name="serviceStatus" >
+    <option value="0" selected>Orçamento em Aberto</option>
+    <option value="1">Agendado</option>
     <option value="2">Não aprovado</option>
     <option value="3">Finalizado</option>
   </select>

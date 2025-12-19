@@ -49,8 +49,8 @@ public class ClientService {
         Map<String, String> statusMap = Map.of(
                 "0", "Aberto",
                 "1", "Agendado",
-                "2", "Finalizado",
-                "3", "Não Aprovado"
+                "2", "Não Aprovado",
+                "3", "Finalizado"
         );
         List<Client> clientsList = clientRepository.findAll().stream().map(
                 c -> {

@@ -4,15 +4,13 @@ package contratos.controller;
 import contratos.model.Client;
 import contratos.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 public class ContractsFilterController {
@@ -52,9 +50,9 @@ public class ContractsFilterController {
         List<Client> clientList = clientRepository.findAll().stream().filter(
                 c -> c.getServiceStatus().equals("2")).toList();
 
-        Double totalNaoAprovado = clientList.stream().mapToDouble(Client::getTotalPrice).sum();
-        String totalNaoAprovadoFormated = String.format("R$ %.2f", totalNaoAprovado);
-        model.addAttribute("totalNaoAprovado", totalNaoAprovadoFormated);
+        Double valorTotalNaoAprovado = clientList.stream().mapToDouble(Client::getTotalPrice).sum();
+        String valorTotalNaoAprovadoFormated = String.format("R$ %.2f", valorTotalNaoAprovado);
+        model.addAttribute("valorTotalNaoAprovado", valorTotalNaoAprovadoFormated);
         model.addAttribute("clientes", clientList);
         return "orcamentosNaoAprovados";
     }
@@ -70,17 +68,4 @@ public class ContractsFilterController {
         model.addAttribute("clientes", clientList);
         return "orcamentosFinalizados";
     }
-
-    @GetMapping("/deleteById/{contract}")
-    public ResponseEntity<?> getNameClientToDelete (@PathVariable Long contract){
-        Client client = clientRepository.findByContract(contract);
-        if (client == null){
-            return ResponseEntity.notFound().build();
-        }
-        Map<String, String> response = new HashMap<>();
-        response.put(String.valueOf(client.getContract()), client.getName());
-
-        return ResponseEntity.ok(response);
-    }
-
 }

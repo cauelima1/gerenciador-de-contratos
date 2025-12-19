@@ -6,12 +6,16 @@ import contratos.repository.UserRepository;
 import contratos.service.ClientService;
 import contratos.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @org.springframework.stereotype.Controller
 public class MainController {
@@ -69,10 +73,18 @@ public class MainController {
     }
 
     @DeleteMapping("/deletar/{contract}")
-    public String deletarContrato(@PathVariable Long contract){
-        clientRepository.delete(clientRepository.findByContract(contract));
-        return "index";
+    public ResponseEntity<String> deletarContrato(@PathVariable Long contract){
+        Client client = clientRepository.findByContract(contract);
+
+        if (client != null) {
+            clientRepository.delete(client);
+            return ResponseEntity.ok("Contrato deletado com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Contrato não encontrado.");
+        }
     }
+
 
     @GetMapping("/gerarPDF")
     public String gerarPDF (Client client){
@@ -117,9 +129,23 @@ public class MainController {
         return "redirect:/clients";
     }
 
+    @GetMapping("/deleteById/{contract}")
+    public ResponseEntity<?> getNameClientToDelete (@PathVariable Long contract){
+        Client client = clientRepository.findByContract(contract);
+        if (client == null){
+            return ResponseEntity.notFound().build();
+        }
+        Map<String, String> response = new HashMap<>();
+        response.put(String.valueOf(client.getContract()), client.getName());
+
+        return ResponseEntity.ok(response);
+    }
+
+
     @GetMapping("/clients")
     public String showContracts(Model model){
-        List<Client> clientList= clientService.showAllContracts();
+        List<Client> clientList= clientService.showAllContracts().stream()
+                        .sorted(Comparator.comparing(Client::getContract).reversed()).toList();
         model.addAttribute("clients", clientList);
         System.out.println(clientList);
         return "clients";
@@ -129,6 +155,8 @@ public class MainController {
     public ResponseEntity<Void> ignoreChromeDevToolsRequest() {
         return ResponseEntity.noContent().build();
     }
+
+
 
 
 

@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Clientes</title>
+    <title>Lista de Propostas</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/auth.js"></script>
+    <script src="/js/edit.js"></script>
+    <script src="/js/script.js"></script>
     <style>
 
         table {
-          width: 100%;
+          text-align: center;
+          width: 80%;
           border-collapse: collapse;
           font-family: Arial, sans-serif;
           font-size: 14px;
@@ -44,10 +47,30 @@
           cursor: pointer;
         }
 
+        .text-bold{
+            font-weight: 700;
+        }
+
     </style>
 </head>
 <body>
-<h2>Clientes cadastrados</h2>
+<h1>Orçamentos emitidos</h1>
+
+<br>
+
+<h3>Filtrar Orçamentos:</h3>
+<div style="display: flex; gap: 10px;">
+
+    <a href="/mostrarEmAberto" class="botao">ABERTO</a>
+    <a href="/mostrarAgendados" class="botao">AGENDADOS</a>
+    <a href="/mostrarNaoAprovados" class="botao">NÃO APROVADOS</a>
+    <a href="/mostrarFinalizados" class="botao">APROVADOS - FINALIZADOS</a>
+    <div style="margin-left: auto;">
+        <a href="/index" class="botao">VOLTAR</a>
+    </div>
+</div>
+
+
 <table>
     <thead>
     <tr>
@@ -64,11 +87,16 @@
         <th>Deslocamento</th>
         <th>Total</th>
         <th>Status do Orçamento</th>
+        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
 
-    <tr th:each="client : ${clients}">
+    <tr th:each="client : ${clients}"
+        th:style="${client.serviceStatus == 'Aberto'} ? 'background-color:#fff9c4;' :
+              (${client.serviceStatus == 'Finalizado'} ? 'background-color:#bbdefb;' :
+              (${client.serviceStatus == 'Não Aprovado'} ? 'background-color:#ffcdd2;' : ''))">
+
         <td th:text="${client.contract}" data-label="Contrato"></td>
         <td th:text="${client.name}" data-label="Nome"></td>
         <td th:text="${client.id}" data-label="CPF/CNPJ"></td>
@@ -76,30 +104,41 @@
         <td th:text="${client.foneNumber}" data-label="Telefone"></td>
         <td th:text="${client.email}" data-label="Email"></td>
         <td th:text="${client.location}" data-label="Localização"></td>
-        <td th:text="${#strings.length(client.serviceDetails) > 50 ? #strings.substring(client.serviceDetails, 0, 50) + '...' : client.serviceDetails}" data-label="Serviço"></td>
+        <td th:text="${#strings.length(client.serviceDetails) > 50 ? #strings.substring(client.serviceDetails, 0, 50) + '...' : client.serviceDetails}"
+            data-label="Serviço"></td>
         <td th:text="${client.serviceType}" data-label="Tipo"></td>
         <td th:text="${client.servicePriceFormated}" data-label="Preço"></td>
         <td th:text="${client.deslocationPriceFormated}" data-label="Deslocamento"></td>
-        <td th:text="${client.totalPriceFormated}" data-label="Total"></td>
+        <td th:text="${client.totalPriceFormated}" data-label="Total" class="text-bold"></td>
         <td th:text="${client.serviceStatus}" data-label="Status do orçamento"></td>
+
+
+        <td>
+            <button th:onclick="'editarContrato(' + ${client.contract} + ')'" class="button">✏️</button>
+            <button th:onclick="'deletarContrato(' + ${client.contract} + ')'" class="button">🗑️</button>
+
+            <form action="/gerar-pdf-existente" method="post">
+                <input type="hidden" name="numeroContrato" th:value="${client.contract}">
+                <button type="submit" class="button">PDF</button>
+            </form>
+        </td>
     </tr>
 
+
+    <div id="modalEdicao" class="modal" style="display:none;">
+        <div class="modal-content" id="modalContent">
+            <span onclick="fecharModal()" class="close">&times;</span>
+
+        </div>
+    </div>
     </tbody>
 </table>
-<br>
-<div>
-    <a href="/index" class="botao">Voltar</a>
-    <a href="/alterar" class="botao">Alterar ou Excluir</a>
-    <a href="/gerarPdfExistente" class="botao">Gerar Orçamento</a>
-</div>
-<br>
-<br>
-<div>
 
-</div>
-<a href="/mostrarEmAberto" class="botao"style="background-color: #28a745;">Filtrar orçamentos em aberto</a> <!-- Concluido -->
-<a href="/mostrarAgendados" class="botao"style="background-color: #008080;">Filtrar orçamentos agendados</a>
-<a href="/mostrarNaoAprovados" class="botao" style="background-color: #B22222;">Filtrar orçamentos não aprovados</a>
-<a href="/mostrarFinalizados" class="botao" style="background-color: #228B22;">Filtrar orçamentos finalizados</a>
+
+
 </body>
+
+<div style="margin-right: 10px; padding-bottom: 5px">
+    <a href="/index" class="botao" >VOLTAR</a>
+</div>
 </html>
