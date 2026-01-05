@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .logout( l-> l.logoutUrl("/logout")
                         .invalidateHttpSession(true)
+                        .clearAuthentication(true)
                         .deleteCookies("JSESSIONID","jwt")
                         .logoutSuccessUrl("/login")
                 )

@@ -13,9 +13,7 @@ import org.springframework.security.core.token.Token;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 @Service
 public class TokenService {
@@ -52,7 +50,12 @@ public class TokenService {
     }
 
     private Instant genExpirationDate() {
-        return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));
+        Instant instant = ZonedDateTime.now()
+                .plusHours(1)
+                .toInstant();
+
+        System.out.println("Expiração do token: " + instant);
+        return instant;
     }
 
 

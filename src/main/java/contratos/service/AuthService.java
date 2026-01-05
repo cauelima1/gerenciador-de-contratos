@@ -22,13 +22,12 @@ public class AuthService {
     public String createUser(Model model, UserDTO userDTO){
         if (userRepository.existsByLogin(userDTO.login().trim().toLowerCase())) {
             model.addAttribute("error", "Nome de usuário já cadastrado!");
-            return "auth/cadastro";
         } else {
             String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.password());
             Users newUser = new Users(userDTO.login().toLowerCase(), encryptedPassword, "user");
             userRepository.save(newUser);
-            return "auth/login";
         }
+        return "auth/login";
 
     }
 
